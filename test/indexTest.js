@@ -74,6 +74,8 @@ describe("Grocer", function () {
           avocadoCoupon = findCoupon("AVOCADO")
           cart = [avocado, avocado]
           consolidatedCart = consolidateCart(cart)
+          console.log('consolidatedCart', consolidatedCart)
+          console.log('consolidatedCart', consolidatedCart)
           avocadoResult = applyCoupons(consolidatedCart, [avocadoCoupon])
         })
 
