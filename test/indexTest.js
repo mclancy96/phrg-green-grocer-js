@@ -142,9 +142,9 @@ describe("Grocer", function () {
         findCoupon("CHEESE"),
       ])
 
-      ;["AVOCADO", "CHEESE"].forEach((item) => {
-        expect(multipleCoupons[item].count).to.equal(1)
-      })
+        ;["AVOCADO", "CHEESE"].forEach((item) => {
+          expect(multipleCoupons[item].count).to.equal(1)
+        })
 
       expect(multipleCoupons["CHEESE"].price).to.equal(6.5)
       expect(multipleCoupons["AVOCADO"].price).to.equal(3.0)
