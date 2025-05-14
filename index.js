@@ -62,49 +62,21 @@ const applyClearance = (cart) => {
 }
 
 const checkout = (cart, coupons) => {
-  // code here
+  const consolidatedCart = consolidateCart(cart)
+  const couponCart = applyCoupons(consolidatedCart, coupons)
+  const clearanceCart = applyClearance(couponCart)
+  const itemDetails = Object.values(clearanceCart);
+  const nonZeroItemDetails = itemDetails.filter(detail => detail.count > 0)// [{}, {}, {}]
+  const subtotal = nonZeroItemDetails.reduce((total, itemDetail) => {
+    return total + (itemDetail['price'] * itemDetail['count'])
+  }, 0)
+  return subtotal > 100 ? subtotal * .9 : subtotal
 }
 
-let items = [
-  { AVOCADO: { price: 3.0, clearance: true } },
-  { AVOCADO: { price: 3.0, clearance: true } },
-  { AVOCADO: { price: 3.0, clearance: true } },
+const myCart = [
   { AVOCADO: { price: 3.0, clearance: true } },
   { AVOCADO: { price: 3.0, clearance: true } },
   { KALE: { price: 3.0, clearance: false } },
-  { BLACK_BEANS: { price: 2.5, clearance: false } },
-  { ALMONDS: { price: 9.0, clearance: false } },
-  { TEMPEH: { price: 3.0, clearance: true } },
-  { CHEESE: { price: 6.5, clearance: false } },
-  { CHEESE: { price: 6.5, clearance: false } },
-  { CHEESE: { price: 6.5, clearance: false } },
-  { CHEESE: { price: 6.5, clearance: false } },
-  { CHEESE: { price: 6.5, clearance: false } },
-  { CHEESE: { price: 6.5, clearance: false } },
-  { CHEESE: { price: 6.5, clearance: false } },
-  { CHEESE: { price: 6.5, clearance: false } },
-  { CHEESE: { price: 6.5, clearance: false } },
-  { CHEESE: { price: 6.5, clearance: false } },
-  { CHEESE: { price: 6.5, clearance: false } },
-  { CHEESE: { price: 6.5, clearance: false } },
-  { CHEESE: { price: 6.5, clearance: false } },
-  { CHEESE: { price: 6.5, clearance: false } },
-  { BEER: { price: 13.0, clearance: false } },
-  { PEANUT_BUTTER: { price: 3.0, clearance: true } },
-  { BEETS: { price: 2.5, clearance: false } },
-  { "SOY MILK": { price: 4.5, clearance: true } },
 ]
-
-let coupons = [
-  { item: "AVOCADO", num: 2, cost: 5.0 },
-  { item: "AVOCADO", num: 2, cost: 5.0 },
-  { item: "BEER", num: 2, cost: 20.0 },
-  { item: "CHEESE", num: 3, cost: 15.0 },
-]
-
-const newCart = consolidateCart(items)
-
-applyCoupons(newCart, coupons)
-
-console.log("newCart: ", newCart)
-console.log(applyClearance(newCart))
+const couponsArr = [{ item: "AVOCADO", num: 2, cost: 5.0 }]
+console.log(checkout(myCart, couponsArr))
