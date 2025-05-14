@@ -52,7 +52,13 @@ const applyCoupons = (cart, coupons) => {
 }
 
 const applyClearance = (cart) => {
-  // code here
+  for (const itemName in cart) {
+    const itemDetail = cart[itemName]
+    if (itemDetail.clearance) {
+      itemDetail.price = Number((itemDetail.price * 0.8).toFixed(1))
+    }
+  }
+  return cart
 }
 
 const checkout = (cart, coupons) => {
@@ -101,3 +107,4 @@ const newCart = consolidateCart(items)
 applyCoupons(newCart, coupons)
 
 console.log("newCart: ", newCart)
+console.log(applyClearance(newCart))
